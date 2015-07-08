@@ -1,6 +1,6 @@
 {
   "name": "gcloud-storage-upload",
-  "version": "0.0.3",
+  "version": "0.0.4-0",
   "description": "Upload files to google cloud storage.",
   "main": "index.js",
   "scripts": {
