@@ -1,0 +1,30 @@
+{
+  "name": "gcloud-storage-upload",
+  "version": "0.0.0",
+  "description": "Upload files to google cloud storage.",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "eslint index.js && npm run build",
+    "build": "babel index.js --out-file cli.js",
+    "prepublish": "npm run build"
+  },
+  "bin": {
+    "gcloud-storage-upload": "cli.js"
+  },
+  "author": "Frank Mecklenburg",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^1.3.0",
+    "commander": "^2.8.1",
+    "fs-readdir-recursive": "^0.1.2",
+    "gcloud": "^0.16.0",
+    "mime": "^1.3.4",
+    "node-slack": "0.0.7",
+    "path": "^0.11.14"
+  },
+  "devDependencies": {
+    "babel": "^5.6.14",
+    "eslint": "^0.24.0"
+  }
+}
