@@ -11,8 +11,11 @@ import commander from 'commander';
 commander
   .option(
     '-s, --slack-channel <slack-channel>',
-    '-p, --path <local-path>',
     'The slack channel to post to.'
+  )
+  .option(
+    '-p, --path <local-path>',
+    'The local path'
   )
   .parse(process.argv);
 
