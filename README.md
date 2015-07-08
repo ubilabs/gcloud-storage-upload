@@ -27,4 +27,11 @@ A `.gcloud.json` must be present in the root folder of the project. This is basi
 
 ## Usage
 
-Just run `ubilabs-gcloud` inside your npm scripts as applicable. All files in `build` directory will be uploaded to `remotePath` given in `.gcloud.json`
+Just run `ubilabs-gcloud` inside your npm scripts as applicable.
+
+There are two options to add.
+
+`-s, --slack-channel <slack-channel>`
+`-p, --path <local-path>`
+
+All files in `path` directory will be uploaded to `remotePath` given in `.gcloud.json`. Slack channel is optional.
