@@ -11,7 +11,11 @@
   "bin": {
     "gcloud-storage-upload": "cli.js"
   },
-  "author": "Frank Mecklenburg",
+  "author": {
+  "name": "Frank Mecklenburg",
+  "email": "mecklenburg@ubilabs.net",
+  "url": "http://ubilabs.net/"
+},
   "license": "ISC",
   "dependencies": {
     "async": "^1.3.0",
