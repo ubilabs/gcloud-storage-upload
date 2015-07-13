@@ -3,10 +3,10 @@
 ## Install
 
 ```
-npm install
+npm install gcloud-storage-upload
 ```
 
-It's not meant to be installed globally.
+It's not meant to be installed globally at the moment.
 
 A `.gcloud.json` must be present in the root folder of the project. This is basically the file you get when you create your credentials in the console of google cloud storage. Plus some extra content for convenience.
 
@@ -31,7 +31,7 @@ Just run `ubilabs-gcloud` inside your npm scripts as applicable.
 
 There are two options to add.
 
-`-s, --slack-channel <slack-channel>`
-`-p, --path <local-path>`
+* `-s, --slack-channel <slack-channel>`
+* `-p, --path <local-path>`
 
 All files in `path` directory will be uploaded to `remotePath` given in `.gcloud.json`. Slack channel is optional.
