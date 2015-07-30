@@ -53,14 +53,13 @@ files.forEach(file => {
   let fileOptions = {
     validation: 'crc32c',
     metadata: {
-      cacheControl: 'no-cache'
-    }
+      cacheControl: 'no-cache',
+      contentType: mime.lookup(file)
+    },
+    destination: gcloudConfig.remotePath + file
   };
 
   asyncTasks.push(done => {
-    fileOptions.metadata.contentType = mime.lookup(file);
-    fileOptions.destination = gcloudConfig.remotePath + file;
-
     bucket.upload(
       path.resolve(buildPath, file),
       fileOptions,
