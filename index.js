@@ -26,7 +26,7 @@ const buildPath = path.resolve(commander.path),
   keyFilename = path.resolve('.gcloud.json'),
   webRoot = `https://storage.googleapis.com/` +
     `${gcloudConfig.bucket}/` +
-    `${gcloudConfig.remotePath}index.html`,
+    `${gcloudConfig.remotePath}`,
   slack = new Slack(gcloudConfig.slackWebHook);
 
 let storage, bucket, files,
@@ -47,7 +47,7 @@ files = readDir(buildPath, (file) => {
   return !/(^\.)/.test(file[0]);
 });
 
-console.log(`Will upload ${files.length} files to:\n${webRoot}\n`);
+console.info(`Will upload ${files.length} files to:\n${webRoot}\n`);
 
 files.forEach(file => {
   let fileOptions = {
@@ -63,19 +63,19 @@ files.forEach(file => {
 
     bucket.upload(
       path.resolve(buildPath, file),
-      fileOptions, (error, remoteFile) => {
+      fileOptions,
+      (error, remoteFile) => {
         if (error) {
           throw new Error(error);
         }
-
-        console.log(`${file} uploaded to ${remoteFile.name}.`);
+        console.info(`${file} uploaded to ${remoteFile.name}.`);
         done();
       });
   });
 });
 
 async.parallelLimit(asyncTasks, 10, function() {
-  console.log('\nUpload done!');
+  console.info('\nUpload done!');
 
   const slackChannel = commander.slackChannel || gcloudConfig.slackWebHook;
 
