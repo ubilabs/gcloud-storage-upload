@@ -30,13 +30,7 @@ const buildPath = path.resolve(commander.path),
   slack = new Slack(gcloudConfig.slackWebHook);
 
 let storage, bucket, files,
-  asyncTasks = [],
-  fileOptions = {
-    validation: 'crc32c',
-    metadata: {
-      cacheControl: 'no-cache'
-    }
-  };
+  asyncTasks = [];
 
 storage = gcloud({
   projectId: gcloudConfig.projectId,
@@ -56,7 +50,14 @@ files = readDir(buildPath, (file) => {
 console.log(`Will upload ${files.length} files to:\n${webRoot}\n`);
 
 files.forEach(file => {
-  asyncTasks.push((done) => {
+  let fileOptions = {
+    validation: 'crc32c',
+    metadata: {
+      cacheControl: 'no-cache'
+    }
+  };
+
+  asyncTasks.push(done => {
     fileOptions.metadata.contentType = mime.lookup(file);
     fileOptions.destination = gcloudConfig.remotePath + file;
 
