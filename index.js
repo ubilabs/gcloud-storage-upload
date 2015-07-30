@@ -15,15 +15,18 @@ commander
   )
   .option(
     '-p, --path <local-path>',
-    'The local path'
+    'The local path.'
+  )
+  .option(
+    '-c, --configFile <path-to-config>',
+    'The local config file.'
   )
   .parse(process.argv);
 
-const gcloudConfig = require(process.cwd() + '/.gcloud.json');
-const packageJson = require(process.cwd() + '/package.json');
-
-const buildPath = path.resolve(commander.path),
-  keyFilename = path.resolve('.gcloud.json'),
+const keyFilePath = path.resolve(commander.configFile || '.gcloud.json'),
+  gcloudConfig = require(keyFilePath),
+  packageJson = require(path.resolve('package.json')),
+  sourcePath = path.resolve(commander.path),
   webRoot = `https://storage.googleapis.com/` +
     `${gcloudConfig.bucket}/` +
     `${gcloudConfig.remotePath}`,
@@ -35,7 +38,7 @@ let storage, bucket, files,
 storage = gcloud({
   projectId: gcloudConfig.projectId,
   bucket: gcloudConfig.bucket,
-  keyFilename: keyFilename,
+  keyFilename: keyFilePath,
   metadata: {
     cacheControl: 'no-cache'
   }
@@ -43,7 +46,7 @@ storage = gcloud({
 
 bucket = storage.bucket(gcloudConfig.bucket);
 
-files = readDir(buildPath, (file) => {
+files = readDir(sourcePath, (file) => {
   return !/(^\.)/.test(file[0]);
 });
 
@@ -61,7 +64,7 @@ files.forEach(file => {
 
   asyncTasks.push(done => {
     bucket.upload(
-      path.resolve(buildPath, file),
+      path.resolve(sourcePath, file),
       fileOptions,
       (error, remoteFile) => {
         if (error) {

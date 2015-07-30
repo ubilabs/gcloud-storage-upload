@@ -1,6 +1,6 @@
 {
   "name": "gcloud-storage-upload",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Upload files to google cloud storage.",
   "main": "index.js",
   "repository": {
@@ -10,7 +10,13 @@
   "scripts": {
     "test": "eslint index.js && npm run build",
     "build": "babel index.js --out-file cli.js",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "release": "echo 'Usage: npm run release:patch|minor|major'",
+    "release:patch": "bumpery --verify='npm test' --no-push --no-commit --no-createTag --versionType patch && npm run changelog && npm run release:commit",
+    "release:minor": "bumpery --verify='npm test' --no-push --no-commit --no-createTag --versionType minor && npm run changelog && npm run release:commit",
+    "release:major": "bumpery --verify='npm test' --no-push --no-commit --no-createTag --versionType major && npm run changelog && npm run release:commit",
+    "release:commit": "bumpery --commitFiles 'CHANGELOG.md package.json' --commitMessage 'chore(release): version %VERSION%' --no-bumpVersion && sh ./tools/notify.sh release $npm_package_version",
+    "changelog": "conventional-changelog-generator && atom -w CHANGELOG.md"
   },
   "bin": {
     "gcloud-storage-upload": "cli.js"
@@ -32,6 +38,8 @@
   },
   "devDependencies": {
     "babel": "^5.6.14",
+    "bumpery": "^1.1.1",
+    "conventional-changelog-generator": "0.0.3",
     "eslint": "^0.24.0"
   }
 }
