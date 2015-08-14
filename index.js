@@ -14,6 +14,10 @@ commander
     'The slack channel to post to.'
   )
   .option(
+    '-r, --remotePath <remote-path>',
+    'The path on gcloud storage'
+  )
+  .option(
     '-p, --path <local-path>',
     'The local path.'
   )
@@ -27,9 +31,10 @@ const keyFilePath = path.resolve(commander.configFile || '.gcloud.json'),
   gcloudConfig = require(keyFilePath),
   packageJson = require(path.resolve('package.json')),
   sourcePath = path.resolve(commander.path),
+  remotePath = commander.remotePath || gcloudConfig.remotePath,
   webRoot = `https://storage.googleapis.com/` +
     `${gcloudConfig.bucket}/` +
-    `${gcloudConfig.remotePath}`,
+    `${remotePath}`,
   slack = new Slack(gcloudConfig.slackWebHook);
 
 let storage, bucket, files,
@@ -59,7 +64,7 @@ files.forEach(file => {
       cacheControl: 'no-cache',
       contentType: mime.lookup(file)
     },
-    destination: gcloudConfig.remotePath + file
+    destination: remotePath + file
   };
 
   asyncTasks.push(done => {
