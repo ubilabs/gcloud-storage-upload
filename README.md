@@ -33,6 +33,7 @@ The options available:
 
 * `-s, --slack-channel <slack-channel>`
 * `-p, --path <local-path>`
+* `-r, --remotePath <remote-path>`
 * `-c, --configFile <path-to-config>`
 
-All files in `path` directory will be uploaded to `remotePath` given in `.gcloud.json`. Slack channel is optional.
+All files in `path` directory will be uploaded to `remotePath` given in `.gcloud.json` or via the options. Slack channel is optional. The options overwrite the `.gcloud.json` settings.
