@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import path from 'path';
+import urljoin from 'url-join';
 import readDir from 'fs-readdir-recursive';
 import mime from 'mime';
 import async from 'async';
@@ -32,9 +33,11 @@ const keyFilePath = path.resolve(commander.configFile || '.gcloud.json'),
   packageJson = require(path.resolve('package.json')),
   sourcePath = path.resolve(commander.path),
   remotePath = commander.remotePath || gcloudConfig.remotePath,
-  webRoot = `https://storage.googleapis.com/` +
-    `${gcloudConfig.bucket}/` +
-    `${remotePath}`,
+  webRoot = urljoin(
+    'https://storage.googleapis.com/',
+    gcloudConfig.bucket,
+    remotePath
+  ),
   slack = new Slack(gcloudConfig.slackWebHook);
 
 let storage, bucket, files,
@@ -64,7 +67,7 @@ files.forEach(file => {
       cacheControl: 'no-cache',
       contentType: mime.lookup(file)
     },
-    destination: remotePath + file
+    destination: urljoin(remotePath, file)
   };
 
   asyncTasks.push(done => {
