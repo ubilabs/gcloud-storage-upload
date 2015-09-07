@@ -20,6 +20,7 @@ A `.gcloud.json` must be present in the root folder of the project. This is basi
   "projectId": "PROJECT ID",
   "bucket": "BUCKET NAME",
   "remotePath": "PATH INSIDE THE BUCKET",
+  "versionNumber": "ADDITIONAL SUBPATH INSIDE THE BUCKET (optional)^"
   "slackWebHook": "SLACK WEB HOOK (optional)",
   "slackChannel": "SLACK CHANNEL TO POST TO (optional, can be set/overwritten by commandline)"
 }
@@ -34,6 +35,10 @@ The options available:
 * `-s, --slack-channel <slack-channel>`
 * `-p, --path <local-path>`
 * `-r, --remotePath <remote-path>`
+* `-v, --versionNumber <version-number>`
 * `-c, --configFile <path-to-config>`
 
-All files in `path` directory will be uploaded to `remotePath` given in `.gcloud.json` or via the options. Slack channel is optional. The options overwrite the `.gcloud.json` settings.
+All files in `path` directory will be uploaded to `remotePath` given in `.gcloud.json` or via the options.  
+An optional `verisonNumber` number (given via the `.gcloud.json` or the options) will be added as sub directory.  
+Slack channel is optional.  
+The options overwrite the `.gcloud.json` settings.
