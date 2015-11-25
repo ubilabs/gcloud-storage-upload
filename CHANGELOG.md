@@ -1,3 +1,12 @@
+### 0.1.1 (2015-11-25)
+
+
+#### Bug Fixes
+
+* **chore:** update to newest gcloud module ([f58c758e](https://github.com/ubilabs/gcloud-storage-upload/commit/f58c758e34b7fac37c5509c085c818dac1b6ab18))
+* **readme:** spelling ([2c5f55d3](https://github.com/ubilabs/gcloud-storage-upload/commit/2c5f55d343c4c8f4dc654e017614f67d7ee9b393))
+
+
 ## 0.1.0 (2015-08-14)
 
 
