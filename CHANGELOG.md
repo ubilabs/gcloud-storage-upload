@@ -1,3 +1,11 @@
+### 0.1.2 (2015-11-25)
+
+
+#### Bug Fixes
+
+* declare all production dependencies ([3295201e](https://github.com/ubilabs/gcloud-storage-upload/commit/3295201eb995080c5f7961ab4332b576f791a7bc))
+
+
 ### 0.1.1 (2015-11-25)
 
 
