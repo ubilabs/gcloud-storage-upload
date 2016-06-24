@@ -40,6 +40,6 @@ The options available:
 * `-c, --configFile <path-to-config>`
 
 All files in `path` directory will be uploaded to `remotePath` given in `.gcloud.json` or via the options.  
-An optional `versionNumber` number (given via the `.gcloud.json` or the options) will be added as sub directory.  
+An optional `versionNumber` number (given via the `.gcloud.json` or the options) will be added as sub directory. Use `$npm_package_version` to include it directly from the `package.json`.
 Slack channel is optional.  
 The options overwrite the `.gcloud.json` settings.
