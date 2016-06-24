@@ -45,7 +45,10 @@ const keyFilePath = path.resolve(commander.configFile || '.gcloud.json'),
     gcloudConfig.bucket,
     remotePath
   ),
-  slack = new Slack(gcloudConfig.slackWebHook);
+  slack = new Slack(gcloudConfig.slackWebHook),
+  metadata = gcloudConfig.metadata || {
+    cacheControl: 'no-cache'
+  };
 
 let storage, bucket, files,
   asyncTasks = [];
@@ -53,10 +56,7 @@ let storage, bucket, files,
 storage = gcloud({
   projectId: gcloudConfig.projectId,
   bucket: gcloudConfig.bucket,
-  keyFilename: keyFilePath,
-  metadata: {
-    cacheControl: 'no-cache'
-  }
+  keyFilename: keyFilePath
 }).storage();
 
 bucket = storage.bucket(gcloudConfig.bucket);
@@ -70,10 +70,11 @@ console.info(`Will upload ${files.length} files to:\n${webRoot}\n`);
 files.forEach(file => {
   let fileOptions = {
     validation: 'crc32c',
-    metadata: {
-      cacheControl: 'no-cache',
-      contentType: mime.lookup(file)
-    },
+    metadata: Object.assign(
+      {},
+      metadata,
+      {contentType: mime.lookup(file)}
+    ),
     destination: urljoin(remotePath, file)
   };
 
