@@ -72,8 +72,8 @@ files.forEach(file => {
     validation: 'crc32c',
     metadata: Object.assign(
       {},
-      metadata,
-      {contentType: mime.lookup(file)}
+      {contentType: mime.lookup(file)},
+      metadata
     ),
     destination: urljoin(remotePath, file)
   };
