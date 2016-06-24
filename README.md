@@ -22,7 +22,8 @@ A `.gcloud.json` must be present in the root folder of the project. This is basi
   "remotePath": "PATH INSIDE THE BUCKET",
   "versionNumber": "ADDITIONAL SUBPATH INSIDE THE BUCKET (optional)^"
   "slackWebHook": "SLACK WEB HOOK (optional)",
-  "slackChannel": "SLACK CHANNEL TO POST TO (optional, can be set/overwritten by commandline)"
+  "slackChannel": "SLACK CHANNEL TO POST TO (optional, can be set/overwritten by commandline)",
+  "metadata": "METADATA FOR UPLOADED FILES (optional, default is {cacheControl: 'no-cache'})"
 }
 ```
 
