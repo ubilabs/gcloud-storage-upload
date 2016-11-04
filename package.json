@@ -2,18 +2,22 @@
   "name": "gcloud-storage-upload",
   "version": "0.2.0",
   "description": "Upload files to google cloud storage.",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "jsnext:main": "lib/index.esm.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/ubilabs/gcloud-storage-upload"
   },
   "scripts": {
-    "test": "snyk test && eslint index.js && npm run build",
-    "build": "babel index.js --out-file cli.js",
+    "clean": "rimraf lib es && mkdir -p {lib,es}",
+    "test": "snyk test && eslint src && npm run build",
+    "build:jsnext": "babel src --out-file lib/index.esm.js",
+    "build:umd": "babel --presets es2015 src --out-file lib/index.js",
+    "build": "npm run clean && npm run build:umd && npm run build:jsnext",
     "prepublish": "npm test && npm run build"
   },
   "bin": {
-    "gcloud-storage-upload": "cli.js"
+    "gcloud-storage-upload": "lib/index.js"
   },
   "author": {
     "name": "Frank Mecklenburg",
@@ -33,7 +37,9 @@
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-eslint": "^7.1.0",
+    "babel-preset-es2015": "^6.18.0",
     "eslint": "^3.9.1",
+    "rimraf": "^2.5.4",
     "snyk": "^1.19.1"
   }
 }
