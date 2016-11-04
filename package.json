@@ -10,13 +10,7 @@
   "scripts": {
     "test": "eslint index.js && npm run build",
     "build": "babel index.js --out-file cli.js",
-    "prepublish": "npm run build",
-    "release": "echo 'Usage: npm run release:patch|minor|major'",
-    "release:patch": "bumpery --verify='npm test' --no-push --no-commit --no-createTag --versionType patch && npm run changelog && npm run release:commit",
-    "release:minor": "bumpery --verify='npm test' --no-push --no-commit --no-createTag --versionType minor && npm run changelog && npm run release:commit",
-    "release:major": "bumpery --verify='npm test' --no-push --no-commit --no-createTag --versionType major && npm run changelog && npm run release:commit",
-    "release:commit": "bumpery --commitFiles 'CHANGELOG.md package.json' --commitMessage 'chore(release): version %VERSION%' --no-bumpVersion",
-    "changelog": "conventional-changelog-generator && atom -w CHANGELOG.md"
+    "prepublish": "npm test && npm run build"
   },
   "bin": {
     "gcloud-storage-upload": "cli.js"
@@ -28,19 +22,17 @@
   },
   "license": "ISC",
   "dependencies": {
-    "async": "^1.3.0",
+    "async": "^2.1.2",
     "commander": "^2.8.1",
     "fs-readdir-recursive": "^1.0.0",
     "gcloud": "^0.25.1",
     "mime": "^1.3.4",
     "node-slack": "0.0.7",
-    "path": "^0.12.7",
-    "url-join": "0.0.1"
+    "url-join": "^1.1.0"
   },
   "devDependencies": {
-    "babel": "^5.6.14",
-    "bumpery": "^1.1.1",
-    "conventional-changelog-generator": "0.0.3",
-    "eslint": "^0.24.0"
+    "babel-cli": "^6.18.0",
+    "babel-eslint": "^7.1.0",
+    "eslint": "^3.9.1"
   }
 }
