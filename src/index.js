@@ -5,7 +5,7 @@ import urljoin from 'url-join';
 import readDir from 'fs-readdir-recursive';
 import mime from 'mime';
 import async from 'async';
-import gcloud from 'gcloud';
+import storage from '@google-cloud/storage';
 import Slack from 'node-slack';
 import commander from 'commander';
 
@@ -41,7 +41,11 @@ const keyFilePath = path.resolve(commander.configFile || '.gcloud.json'),
     commander.versionNumber || gcloudConfig.versionNumber || null
   ),
   webRoot = urljoin(
-    'https://storage.googleapis.com/',
+    gcloudConfig.bucket,
+    remotePath
+  ),
+  consoleRoot = urljoin(
+    'https://console.cloud.google.com/storage/browser/',
     gcloudConfig.bucket,
     remotePath
   ),
@@ -50,25 +54,23 @@ const keyFilePath = path.resolve(commander.configFile || '.gcloud.json'),
     cacheControl: 'no-cache'
   };
 
-let storage, bucket, files,
-  asyncTasks = [];
+const asyncTasks = [];
 
-storage = gcloud({
+const storageApi = storage({
   projectId: gcloudConfig.projectId,
   bucket: gcloudConfig.bucket,
   keyFilename: keyFilePath
-}).storage();
-
-bucket = storage.bucket(gcloudConfig.bucket);
-
-files = readDir(sourcePath, (file) => {
-  return !/(^\.)/.test(file[0]);
 });
 
-console.info(`Will upload ${files.length} files to:\n${webRoot}\n`);
+const bucket = storageApi.bucket(gcloudConfig.bucket);
+
+const files = readDir(sourcePath, file => !/(^\.)/.test(file[0]));
+
+console.info(`Will upload ${files.length} files to:` +
+  `\nConsole-root: ${consoleRoot}\nWeb-root: ${webRoot}\n`);
 
 files.forEach(file => {
-  let fileOptions = {
+  const fileOptions = {
     validation: 'crc32c',
     metadata: Object.assign(
       {},
@@ -92,7 +94,7 @@ files.forEach(file => {
   });
 });
 
-async.parallelLimit(asyncTasks, 10, function() {
+async.parallelLimit(asyncTasks, 10, () => {
   console.info('\nUpload done!');
 
   const slackChannel = commander.slackChannel || gcloudConfig.slackWebHook;
