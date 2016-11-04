@@ -8,7 +8,7 @@
     "url": "https://github.com/ubilabs/gcloud-storage-upload"
   },
   "scripts": {
-    "test": "eslint index.js && npm run build",
+    "test": "snyk test && eslint index.js && npm run build",
     "build": "babel index.js --out-file cli.js",
     "prepublish": "npm test && npm run build"
   },
@@ -33,6 +33,7 @@
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-eslint": "^7.1.0",
-    "eslint": "^3.9.1"
+    "eslint": "^3.9.1",
+    "snyk": "^1.19.1"
   }
 }
