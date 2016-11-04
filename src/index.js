@@ -41,7 +41,11 @@ const keyFilePath = path.resolve(commander.configFile || '.gcloud.json'),
     commander.versionNumber || gcloudConfig.versionNumber || null
   ),
   webRoot = urljoin(
-    'https://storage.googleapis.com/',
+    gcloudConfig.bucket,
+    remotePath
+  ),
+  consoleRoot = urljoin(
+    'https://console.cloud.google.com/storage/browser/',
     gcloudConfig.bucket,
     remotePath
   ),
@@ -62,7 +66,8 @@ const bucket = storageApi.bucket(gcloudConfig.bucket);
 
 const files = readDir(sourcePath, file => !/(^\.)/.test(file[0]));
 
-console.info(`Will upload ${files.length} files to:\n${webRoot}\n`);
+console.info(`Will upload ${files.length} files to:` +
+  `\nConsole-root: ${consoleRoot}\nWeb-root: ${webRoot}\n`);
 
 files.forEach(file => {
   const fileOptions = {
