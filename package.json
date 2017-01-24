@@ -1,6 +1,6 @@
 {
   "name": "gcloud-storage-upload",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Upload files to google cloud storage.",
   "main": "lib/index.js",
   "jsnext:main": "lib/index.esm.js",
