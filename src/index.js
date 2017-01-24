@@ -37,8 +37,8 @@ const keyFilePath = path.resolve(commander.configFile || '.gcloud.json'),
   packageJson = require(path.resolve('package.json')),
   sourcePath = commander.path ? path.resolve(commander.path) : process.cwd(),
   remotePath = urljoin(
-    commander.remotePath || gcloudConfig.remotePath,
-    commander.versionNumber || gcloudConfig.versionNumber || null
+    commander.remotePath || gcloudConfig.remotePath || '',
+    commander.versionNumber || gcloudConfig.versionNumber || ''
   ),
   webRoot = urljoin(
     gcloudConfig.bucket,
@@ -77,7 +77,7 @@ files.forEach(file => {
       {contentType: mime.lookup(file)},
       metadata
     ),
-    destination: urljoin(remotePath, file)
+    destination: /^\/$/.test(remotePath) ? file : urljoin(remotePath, file)
   };
 
   asyncTasks.push(done => {
