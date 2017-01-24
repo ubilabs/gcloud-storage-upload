@@ -1,18 +1,21 @@
 language: node_js
-node_js: node
-
+node_js:
+- '6'
+before_install:
+- npm i -g snyk
+- snyk auth $SNYK_TOKEN
 cache:
   directories:
-    - node_modules
-
+  - node_modules
 sudo: false
-
 env:
+  matrix:
   - CXX=g++-4.8
-
+  global:
+    secure: DjWDmw6EtGPc07QVdtjWeNS98ALieZg5xkKw0pfe24WpPoOZpDBsEY5OANk4bKrmt3/VoN8ElItCRaxybfJbh6QsQWsTMyUfdQxjNmBYzN7tuJ+eQtmrkxQ4qDmHg7NE6mMN2+PXh4X3pD5bgfAkNc6dLH8Vg/RoPwSNuxfL8LosLrNBB1xPe/va4Rg7c521xppwPFWi+8nijGXWPv5zJ5DBt4QIyBvNHK5tpBRl4QDT/sbBb6cbDIWWCanmOlDwwVQiBB8wiudB7JKDpDJhtcgeskE5qNrCiQCltmMTLa7M/bseKCGBaYGUy1+EmKt3Gk1gFdhtqRhyJotGsT0bN6/wigSOQVyz9lsbtFzkdn/qxLbYi33X1SVjO5yczSMXrNDKjFvzH+iFyiAaRbnOR/hjzGUhP8adyZxw0h6CAwLuZmWoDcqfTD+GDm4pogiMPJwgWttW7Xpayz+/owYz2axzVT2VBinxGLB5Atn6gwtJYpTRc8nwiyf6ywdh6y3/iRUSxPO5NNauJj0dwQocg+zA9UTyF2A9Xkj6zsBpLpdn69J5Dd41MmT1ywZ2naxoo2/tNB0y1Ph8jdqu1Te6nkexmzEhXiocCr0YXLsliX53ppYg6izgsm6ZXoXj0zd3xl24z2c3wzid8nxAv38NwYJCEMd5AR3Xn7SLrY0ViBI=
 addons:
   apt:
     sources:
-      - ubuntu-toolchain-r-test
+    - ubuntu-toolchain-r-test
     packages:
-      - g++-4.8
+    - g++-4.8
