@@ -23,10 +23,6 @@ commander
     'The local path (defaults to current path).'
   )
   .option(
-    '-v, --versionNumber <version-number>',
-    'The version number is added as additional subfolder to the local path.'
-  )
-  .option(
     '-c, --configFile <path-to-config>',
     'The local config file.'
   )
@@ -36,10 +32,7 @@ const keyFilePath = path.resolve(commander.configFile || '.gcloud.json'),
   gcloudConfig = require(keyFilePath),
   packageJson = require(path.resolve('package.json')),
   sourcePath = commander.path ? path.resolve(commander.path) : process.cwd(),
-  remotePath = urljoin(
-    commander.remotePath || gcloudConfig.remotePath || '',
-    commander.versionNumber || gcloudConfig.versionNumber || ''
-  ),
+  remotePath = commander.remotePath || gcloudConfig.remotePath || '',
   webRoot = urljoin(
     gcloudConfig.bucket,
     remotePath
