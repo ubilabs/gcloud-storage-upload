@@ -63,7 +63,14 @@ console.info(`Will upload ${files.length} files to:` +
   `\nConsole-root: ${consoleRoot}\nWeb-root: ${webRoot}\n`);
 
 files.forEach(file => {
+  const {gzipExtensions} = gcloudConfig;
+  const extension = path.extname(file).replace('.', '');
+  const shouldGzip = gzipExtensions ?
+    gzipExtensions.includes(extension) :
+    false;
+
   const fileOptions = {
+    gzip: shouldGzip,
     validation: 'crc32c',
     metadata: Object.assign(
       {},
