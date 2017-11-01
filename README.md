@@ -23,7 +23,8 @@ A `.gcloud.json` must be present in the root folder of the project. This is basi
   "versionNumber": "ADDITIONAL SUBPATH INSIDE THE BUCKET (optional)^"
   "slackWebHook": "SLACK WEB HOOK (optional)",
   "slackChannel": "SLACK CHANNEL TO POST TO (optional, can be set/overwritten by commandline)",
-  "metadata": "METADATA FOR UPLOADED FILES (optional, default is {cacheControl: 'no-cache'})"
+  "metadata": "METADATA FOR UPLOADED FILES (optional, default is {cacheControl: 'no-cache'})",
+  "gzipExtensions": "OPTIONAL ARRAY OF FILE EXTENSIONS WHICH SHOULD BE UPLOADED WITH GZIP CONTENT ENCODING: ['js', 'css', 'html', 'csv'] "
 }
 ```
 
@@ -38,7 +39,7 @@ The options available:
 * `-r, --remotePath <remote-path>`
 * `-c, --configFile <path-to-config>`
 
-All files in `path` directory will be uploaded to `remotePath` given in `.gcloud.json` or via the options.  
-The slack channel is optional.  
+All files in `path` directory will be uploaded to `remotePath` given in `.gcloud.json` or via the options.
+The slack channel is optional.
 
 The options overwrite the `.gcloud.json` settings.
