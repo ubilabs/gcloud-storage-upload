@@ -5,7 +5,7 @@ import urljoin from 'url-join';
 import readDir from 'fs-readdir-recursive';
 import mime from 'mime';
 import async from 'async';
-import storage from '@google-cloud/storage';
+import {Storage} from '@google-cloud/storage';
 import Slack from 'node-slack';
 import commander from 'commander';
 
@@ -49,7 +49,7 @@ const keyFilePath = path.resolve(commander.configFile || '.gcloud.json'),
 
 const asyncTasks = [];
 
-const storageApi = storage({
+const storageApi = new Storage({
   projectId: gcloudConfig.projectId,
   bucket: gcloudConfig.bucket,
   keyFilename: keyFilePath
