@@ -1,6 +1,6 @@
 {
   "name": "gcloud-storage-upload",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Upload files to google cloud storage.",
   "main": "lib/index.js",
   "jsnext:main": "lib/index.esm.js",
@@ -26,7 +26,7 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@google-cloud/storage": "^1.2.0",
+    "@google-cloud/storage": "^2.1.0",
     "async": "^2.1.2",
     "commander": "^2.8.1",
     "fs-readdir-recursive": "^1.0.0",
