@@ -10,7 +10,7 @@
   },
   "scripts": {
     "clean": "rimraf lib && mkdir -p lib",
-    "test": "snyk test && eslint src && npm run build",
+    "test": "eslint src && npm run build",
     "build:jsnext": "babel src --out-file lib/index.esm.js",
     "build:umd": "babel --presets es2015 src --out-file lib/index.js",
     "build": "npm run clean && npm run build:umd && npm run build:jsnext",
