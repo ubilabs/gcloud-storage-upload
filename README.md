@@ -30,7 +30,7 @@ A `.gcloud.json` must be present in the root folder of the project. This is basi
 
 ## Usage
 
-Just run `ubilabs-gcloud` inside your npm scripts as applicable.
+Just run `gcloud-storage-upload` inside your npm scripts as applicable.
 
 The options available:
 
