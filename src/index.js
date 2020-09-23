@@ -5,7 +5,7 @@ import urljoin from 'url-join';
 import readDir from 'fs-readdir-recursive';
 import mime from 'mime';
 import async from 'async';
-import {Storage} from '@google-cloud/storage';
+import { Storage } from '@google-cloud/storage';
 import Slack from 'node-slack';
 import commander from 'commander';
 
@@ -14,18 +14,12 @@ commander
     '-s, --slack-channel <slack-channel>',
     'The slack channel to post to.'
   )
-  .option(
-    '-r, --remotePath <remote-path>',
-    'The path on gcloud storage'
-  )
+  .option('-r, --remotePath <remote-path>', 'The path on gcloud storage')
   .option(
     '-p, --path <local-path>',
     'The local path (defaults to current path).'
   )
-  .option(
-    '-c, --configFile <path-to-config>',
-    'The local config file.'
-  )
+  .option('-c, --configFile <path-to-config>', 'The local config file.')
   .parse(process.argv);
 
 const keyFilePath = path.resolve(commander.configFile || '.gcloud.json'),
@@ -33,10 +27,7 @@ const keyFilePath = path.resolve(commander.configFile || '.gcloud.json'),
   packageJson = require(path.resolve('package.json')),
   sourcePath = commander.path ? path.resolve(commander.path) : process.cwd(),
   remotePath = commander.remotePath || gcloudConfig.remotePath || '',
-  webRoot = urljoin(
-    gcloudConfig.bucket,
-    remotePath
-  ),
+  webRoot = urljoin(gcloudConfig.bucket, remotePath),
   consoleRoot = urljoin(
     'https://console.cloud.google.com/storage/browser/',
     gcloudConfig.bucket,
@@ -57,30 +48,28 @@ const storageApi = new Storage({
 
 const bucket = storageApi.bucket(gcloudConfig.bucket);
 
-const files = readDir(sourcePath, file => !/(^\.)/.test(file[0]));
+const files = readDir(sourcePath, (file) => !/(^\.)/.test(file[0]));
 
-console.info(`Will upload ${files.length} files to:` +
-  `\nConsole-root: ${consoleRoot}\nWeb-root: ${webRoot}\n`);
+console.info(
+  `Will upload ${files.length} files to:` +
+  `\nConsole-root: ${consoleRoot}\nWeb-root: ${webRoot}\n`
+);
 
-files.forEach(file => {
-  const {gzipExtensions} = gcloudConfig;
+files.forEach((file) => {
+  const { gzipExtensions } = gcloudConfig;
   const extension = path.extname(file).replace('.', '');
-  const shouldGzip = gzipExtensions ?
-    gzipExtensions.includes(extension) :
-    false;
+  const shouldGzip = gzipExtensions
+    ? gzipExtensions.includes(extension)
+    : false;
 
   const fileOptions = {
     gzip: shouldGzip,
     validation: 'crc32c',
-    metadata: Object.assign(
-      {},
-      {contentType: mime.lookup(file)},
-      metadata
-    ),
+    metadata: Object.assign({}, { contentType: mime.getType(file) }, metadata),
     destination: /^\/$/.test(remotePath) ? file : urljoin(remotePath, file)
   };
 
-  asyncTasks.push(done => {
+  asyncTasks.push((done) => {
     bucket.upload(
       path.resolve(sourcePath, file),
       fileOptions,
@@ -90,7 +79,8 @@ files.forEach(file => {
         }
         console.info(`${file} uploaded to ${remoteFile.name}.`);
         done();
-      });
+      }
+    );
   });
 });
 
